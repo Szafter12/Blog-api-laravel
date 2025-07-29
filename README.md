@@ -175,6 +175,3 @@ php artisan serve
 
 ---
 
-## 📚 Licencja
-
-Projekt na potrzeby nauki – MIT License.
