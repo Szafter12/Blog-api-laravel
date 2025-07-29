@@ -1,6 +1,6 @@
 # 📰 Blog API
 
-A simple REST API for the Post model, created in Laravel. It supports CRUD operations: retrieving, creating, viewing, and deleting posts.
+A simple REST API for the Post model, created in Laravel for practise. It supports CRUD operations: retrieving, creating, viewing, and deleting posts.
 
 ---
 
