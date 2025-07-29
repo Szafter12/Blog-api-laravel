@@ -30,21 +30,14 @@ class PostController extends Controller
     {
         $validated = $request->validated();
 
-        try {
-            $new_post = Post::create($validated);
+        $new_post = Post::create($validated);
 
-            return response()->json([
-                'status' => 'success',
-                'data' => [
-                    'post' => $new_post
-                ]
-            ], 201);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'post' => $new_post
+            ]
+        ], 201);
     }
 
     /**
@@ -52,7 +45,15 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
+
         $post = Post::find($id);
+
+        if (!$post) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'post not found'
+            ], 404);
+        }
 
         return response()->json([
             'status' => 'success',
@@ -75,6 +76,16 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if (Post::destroy($id) === 0) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'post not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'post deleted succesfuly'
+        ], 200);
     }
 }
