@@ -1,61 +1,180 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📰 Blog API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Prosty REST API dla modelu Post, stworzony w Laravelu. Obsługuje operacje CRUD: pobieranie, tworzenie, przeglądanie i usuwanie postów.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📦 Endpointy
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### ✅ `GET /api/posts`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Pobiera listę wszystkich postów.
 
-## Learning Laravel
+#### Response `200 OK`
+```json
+{
+  "status": "success",
+  "data": {
+    "posts": [
+      {
+        "id": 1,
+        "title": "Przykładowy post",
+        "content": "Treść posta"
+      }
+    ]
+  }
+}
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### ✍️ `POST /api/posts`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Tworzy nowy post.
 
-## Laravel Sponsors
+#### Body (JSON)
+```json
+{
+  "title": "Nowy post",
+  "content": "Treść posta"
+}
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+> Pola są walidowane przez `StorePostRequest`.
 
-### Premium Partners
+#### Response `201 Created`
+```json
+{
+  "status": "success",
+  "data": {
+    "post": {
+      "id": 1,
+      "title": "Nowy post",
+      "content": "Treść posta"
+    }
+  }
+}
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+### 🔍 `GET /api/posts/{id}`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Pobiera post o podanym ID.
 
-## Code of Conduct
+#### Response `200 OK`
+```json
+{
+  "status": "success",
+  "data": {
+    "post": {
+      "id": 1,
+      "title": "Tytuł posta",
+      "content": "Treść posta"
+    }
+  }
+}
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Response `404 Not Found`
+```json
+{
+  "status": "failed",
+  "message": "post not found"
+}
+```
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 🗑️ `DELETE /api/posts/{id}`
 
-## License
+Usuwa post o podanym ID.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### Response `200 OK`
+```json
+{
+  "status": "success",
+  "message": "post deleted succesfuly"
+}
+```
+
+#### Response `404 Not Found`
+```json
+{
+  "status": "failed",
+  "message": "post not found"
+}
+```
+
+---
+
+### ✏️ `PUT /api/posts/{id}`
+
+Endpoint do aktualizacji posta — **niezaimplementowany** w aktualnej wersji API.
+
+---
+
+## ⚙️ Statusy HTTP
+
+| Kod | Znaczenie             |
+|-----|------------------------|
+| 200 | OK / Sukces            |
+| 201 | Stworzono              |
+| 404 | Nie znaleziono         |
+| 422 | Błąd walidacji (z `StorePostRequest`) |
+
+---
+
+## 🧪 Przykłady curl
+
+```bash
+# Pobierz wszystkie posty
+curl -X GET http://localhost:8000/api/posts
+
+# Utwórz post
+curl -X POST http://localhost:8000/api/posts \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Test","content":"Treść"}'
+
+# Pobierz konkretny post
+curl -X GET http://localhost:8000/api/posts/1
+
+# Usuń post
+curl -X DELETE http://localhost:8000/api/posts/1
+```
+
+---
+
+## 📁 Pliki źródłowe
+
+- Kontroler: `app/Http/Controllers/PostController.php`
+- Walidacja: `app/Http/Requests/StorePostRequest.php`
+- Model: `app/Models/Post.php`
+
+---
+
+## 📌 Wymagania
+
+- Laravel 10+
+- PHP 8.1+
+- SQLite / MySQL / inna obsługiwana baza danych
+
+---
+
+## 🔧 Uruchomienie projektu
+
+```bash
+git clone <repo-url>
+cd blog-api
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
+```
+
+---
+
+## 📚 Licencja
+
+Projekt na potrzeby nauki – MIT License.
