@@ -13,13 +13,13 @@ Retrieves a list of all posts.
 #### Response `200 OK`
 ```json
 {
-  ‘status’: ‘success’,
-  ‘data’: {
-    ‘posts’: [
+  'status': 'success',
+  'data': {
+    'posts': [
       {
-        ‘id’: 1,
-        ‘title’: ‘Sample post’,
-        ‘content’: ‘Post content’
+        'id': 1,
+        'title': 'Sample post',
+        'content': 'Post content'
       }
     ]
   }
