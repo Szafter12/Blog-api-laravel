@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -15,16 +16,35 @@ class PostController extends Controller
         $posts = Post::get();
 
         return response()->json([
-            'posts' => $posts,
+            'status' => 'success',
+            'data' => [
+                'posts' => $posts,
+            ]
         ], 200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        try {
+            $new_post = Post::create($validated);
+
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    'post' => $new_post
+                ]
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -35,7 +55,10 @@ class PostController extends Controller
         $post = Post::find($id);
 
         return response()->json([
-            'post' => $post
+            'status' => 'success',
+            'data' => [
+                'post' => $post
+            ]
         ], 200);
     }
 
