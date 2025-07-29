@@ -1,6 +1,6 @@
 # 📰 Blog API
 
-A simple REST API for the Post model, created in Laravel for practise. It supports CRUD operations
+A simple REST API for the Post model, created in Laravel. It supports CRUD operations: retrieving, creating, viewing, and deleting posts.
 
 ---
 
@@ -13,13 +13,13 @@ Retrieves a list of all posts.
 #### Response `200 OK`
 ```json
 {
-  'status': 'success',
-  'data': {
-    'posts': [
+  ‘status’: ‘success’,
+  ‘data’: {
+    ‘posts’: [
       {
-        'id': 1,
-        'title': 'Sample post',
-        'content': 'Post content'
+        ‘id’: 1,
+        ‘title’: ‘Sample post’,
+        ‘content’: ‘Post content’
       }
     ]
   }
@@ -117,7 +117,7 @@ Endpoint for updating a post — **not implemented** in the current version of t
 ## ⚙️ HTTP statuses
 
 | Code | Meaning             |
-|-----|----------------------- -|
+|-----|------------------------|
 | 200 | OK / Success            |
 | 201 | Created              |
 | 404 | Not found         |
@@ -134,7 +134,7 @@ curl -X GET http://localhost:8000/api/posts
 # Create a post
 curl -X POST http://localhost:8000/api/posts \
   -H ‘Content-Type: application/json’ \
-  -d '{‘title’:‘Test’,“content”:‘Content’}'
+  -d “{‘title’:‘Test’,“content”:‘Content’}”
 
 # Get a specific post
 curl -X GET http://localhost:8000/api/posts/1
