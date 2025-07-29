@@ -1,25 +1,25 @@
 # 📰 Blog API
 
-Prosty REST API dla modelu Post, stworzony w Laravelu. Obsługuje operacje CRUD: pobieranie, tworzenie, przeglądanie i usuwanie postów.
+A simple REST API for the Post model, created in Laravel for practise. It supports CRUD operations
 
 ---
 
-## 📦 Endpointy
+## 📦 Endpoints
 
 ### ✅ `GET /api/posts`
 
-Pobiera listę wszystkich postów.
+Retrieves a list of all posts.
 
 #### Response `200 OK`
 ```json
 {
-  "status": "success",
-  "data": {
-    "posts": [
+  ‘status’: ‘success’,
+  ‘data’: {
+    ‘posts’: [
       {
-        "id": 1,
-        "title": "Przykładowy post",
-        "content": "Treść posta"
+        ‘id’: 1,
+        ‘title’: ‘Sample post’,
+        ‘content’: ‘Post content’
       }
     ]
   }
@@ -30,27 +30,27 @@ Pobiera listę wszystkich postów.
 
 ### ✍️ `POST /api/posts`
 
-Tworzy nowy post.
+Creates a new post.
 
 #### Body (JSON)
 ```json
 {
-  "title": "Nowy post",
-  "content": "Treść posta"
+  ‘title’: ‘New post’,
+  ‘content’: ‘Post content’
 }
 ```
 
-> Pola są walidowane przez `StorePostRequest`.
+> Fields are validated by `StorePostRequest`.
 
 #### Response `201 Created`
 ```json
 {
-  "status": "success",
-  "data": {
-    "post": {
-      "id": 1,
-      "title": "Nowy post",
-      "content": "Treść posta"
+  ‘status’: ‘success’,
+  ‘data’: {
+    ‘post’: {
+      ‘id’: 1,
+      ‘title’: ‘New post’,
+      ‘content’: ‘Post content’
     }
   }
 }
@@ -60,17 +60,17 @@ Tworzy nowy post.
 
 ### 🔍 `GET /api/posts/{id}`
 
-Pobiera post o podanym ID.
+Retrieves the post with the specified ID.
 
 #### Response `200 OK`
 ```json
 {
-  "status": "success",
-  "data": {
-    "post": {
-      "id": 1,
-      "title": "Tytuł posta",
-      "content": "Treść posta"
+  ‘status’: ‘success’,
+  ‘data’: {
+    ‘post’: {
+      ‘id’: 1,
+      ‘title’: ‘Post title’,
+      ‘content’: ‘Post content’
     }
   }
 }
@@ -79,8 +79,8 @@ Pobiera post o podanym ID.
 #### Response `404 Not Found`
 ```json
 {
-  "status": "failed",
-  "message": "post not found"
+  ‘status’: ‘failed’,
+  ‘message’: ‘post not found’
 }
 ```
 
@@ -88,21 +88,21 @@ Pobiera post o podanym ID.
 
 ### 🗑️ `DELETE /api/posts/{id}`
 
-Usuwa post o podanym ID.
+Deletes the post with the specified ID.
 
 #### Response `200 OK`
 ```json
 {
-  "status": "success",
-  "message": "post deleted succesfuly"
+  ‘status’: ‘success’,
+  ‘message’: ‘post deleted successfully’
 }
 ```
 
 #### Response `404 Not Found`
 ```json
 {
-  "status": "failed",
-  "message": "post not found"
+  ‘status’: ‘failed’,
+  ‘message’: ‘post not found’
 }
 ```
 
@@ -110,58 +110,58 @@ Usuwa post o podanym ID.
 
 ### ✏️ `PUT /api/posts/{id}`
 
-Endpoint do aktualizacji posta — **niezaimplementowany** w aktualnej wersji API.
+Endpoint for updating a post — **not implemented** in the current version of the API.
 
 ---
 
-## ⚙️ Statusy HTTP
+## ⚙️ HTTP statuses
 
-| Kod | Znaczenie             |
-|-----|------------------------|
-| 200 | OK / Sukces            |
-| 201 | Stworzono              |
-| 404 | Nie znaleziono         |
-| 422 | Błąd walidacji (z `StorePostRequest`) |
+| Code | Meaning             |
+|-----|----------------------- -|
+| 200 | OK / Success            |
+| 201 | Created              |
+| 404 | Not found         |
+| 422 | Validation error (from `StorePostRequest`) |
 
 ---
 
-## 🧪 Przykłady curl
+## 🧪 Curl examples
 
 ```bash
-# Pobierz wszystkie posty
+# Get all posts
 curl -X GET http://localhost:8000/api/posts
 
-# Utwórz post
+# Create a post
 curl -X POST http://localhost:8000/api/posts \
-  -H "Content-Type: application/json" \
-  -d '{"title":"Test","content":"Treść"}'
+  -H ‘Content-Type: application/json’ \
+  -d '{‘title’:‘Test’,“content”:‘Content’}'
 
-# Pobierz konkretny post
+# Get a specific post
 curl -X GET http://localhost:8000/api/posts/1
 
-# Usuń post
+# Delete a post
 curl -X DELETE http://localhost:8000/api/posts/1
 ```
 
 ---
 
-## 📁 Pliki źródłowe
+## 📁 Source files
 
-- Kontroler: `app/Http/Controllers/PostController.php`
-- Walidacja: `app/Http/Requests/StorePostRequest.php`
+- Controller: `app/Http/Controllers/PostController.php`
+- Validation: `app/Http/Requests/StorePostRequest.php`
 - Model: `app/Models/Post.php`
 
 ---
 
-## 📌 Wymagania
+## 📌 Requirements
 
 - Laravel 10+
 - PHP 8.1+
-- SQLite / MySQL / inna obsługiwana baza danych
+- SQLite / MySQL / other supported database
 
 ---
 
-## 🔧 Uruchomienie projektu
+## 🔧 Running the project
 
 ```bash
 git clone <repo-url>
@@ -174,4 +174,3 @@ php artisan serve
 ```
 
 ---
-
