@@ -1,6 +1,6 @@
 # Blog API
 
-This is a simple Blog API built with Laravel, providing endpoints to manage blog posts. The API allows you to perform CRUD (Create, Read, Update, Delete) operations on blog posts.
+This is a simple Blog API built with Laravel for practise, providing endpoints to manage blog posts. The API allows you to perform CRUD (Create, Read, Update, Delete) operations on blog posts.
 
 ## API Documentation
 
