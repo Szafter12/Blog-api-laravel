@@ -1,176 +1,239 @@
-# 📰 Blog API
+Blog API
+This is a simple Blog API built with Laravel, providing endpoints to manage blog posts. The API allows you to perform CRUD (Create, Read, Update, Delete) operations on blog posts.
+API Documentation
+Below is the documentation for the available API endpoints.
+Base URL
+All endpoints are prefixed with /api.
+Endpoints
+1. Get All Posts
 
-A simple REST API for the Post model, created in Laravel for practise. It supports CRUD operations: retrieving, creating, viewing, and deleting posts.
-
----
-
-## 📦 Endpoints
-
-### ✅ `GET /api/posts`
-
-Retrieves a list of all posts.
-
-#### Response `200 OK`
-```json
-{
-  ‘status’: ‘success’,
-  ‘data’: {
-    ‘posts’: [
-      {
-        ‘id’: 1,
-        ‘title’: ‘Sample post’,
-        ‘content’: ‘Post content’
-      }
-    ]
-  }
-}
-```
-
----
-
-### ✍️ `POST /api/posts`
-
-Creates a new post.
-
-#### Body (JSON)
-```json
-{
-  ‘title’: ‘New post’,
-  ‘content’: ‘Post content’
-}
-```
-
-> Fields are validated by `StorePostRequest`.
-
-#### Response `201 Created`
-```json
-{
-  ‘status’: ‘success’,
-  ‘data’: {
-    ‘post’: {
-      ‘id’: 1,
-      ‘title’: ‘New post’,
-      ‘content’: ‘Post content’
+Method: GET
+Endpoint: /api/posts
+Controller: PostController@index
+Description: Retrieves a list of all blog posts.
+Response:
+Status Code: 200 OK
+Body:{
+    "status": "success",
+    "data": {
+        "posts": [
+            {
+                "id": 1,
+                "title": "Post Title",
+                "content": "Post Content",
+                "created_at": "2025-07-30T16:02:00.000000Z",
+                "updated_at": "2025-07-30T16:02:00.000000Z"
+            },
+            ...
+        ]
     }
-  }
 }
-```
 
----
 
-### 🔍 `GET /api/posts/{id}`
 
-Retrieves the post with the specified ID.
 
-#### Response `200 OK`
-```json
-{
-  ‘status’: ‘success’,
-  ‘data’: {
-    ‘post’: {
-      ‘id’: 1,
-      ‘title’: ‘Post title’,
-      ‘content’: ‘Post content’
+
+2. Create a Post
+
+Method: POST
+Endpoint: /api/posts
+Controller: PostController@store
+Description: Creates a new blog post.
+Request Body:{
+    "title": "New Post Title",
+    "content": "New Post Content"
+}
+
+
+Response:
+Status Code: 201 Created
+Body:{
+    "status": "success",
+    "data": {
+        "post": {
+            "id": 1,
+            "title": "New Post Title",
+            "content": "New Post Content",
+            "created_at": "2025-07-30T16:02:00.000000Z",
+            "updated_at": "2025-07-30T16:02:00.000000Z"
+        }
     }
-  }
 }
-```
 
-#### Response `404 Not Found`
-```json
-{
-  ‘status’: ‘failed’,
-  ‘message’: ‘post not found’
+
+
+
+
+3. Get a Specific Post
+
+Method: GET
+Endpoint: /api/posts/{post}
+Controller: PostController@show
+Description: Retrieves a specific blog post by its ID.
+Parameters:
+post: The ID of the post (e.g., /api/posts/1).
+
+
+Response:
+Status Code: 200 OK
+Body:{
+    "status": "success",
+    "data": {
+        "post": {
+            "id": 1,
+            "title": "Post Title",
+            "content": "Post Content",
+            "created_at": "2025-07-30T16:02:00.000000Z",
+            "updated_at": "2025-07-30T16:02:00.000000Z"
+        }
+    }
 }
-```
 
----
 
-### 🗑️ `DELETE /api/posts/{id}`
-
-Deletes the post with the specified ID.
-
-#### Response `200 OK`
-```json
-{
-  ‘status’: ‘success’,
-  ‘message’: ‘post deleted successfully’
+Error Response (if post not found):
+Status Code: 404 Not Found
+Body:{
+    "status": "failed",
+    "message": "post not found"
 }
-```
 
-#### Response `404 Not Found`
-```json
-{
-  ‘status’: ‘failed’,
-  ‘message’: ‘post not found’
+
+
+
+
+
+
+4. Update a Post
+
+Method: PUT or PATCH
+Endpoint: /api/posts/{post}
+Controller: PostController@update
+Description: Updates an existing blog post by its ID.
+Parameters:
+post: The ID of the post (e.g., /api/posts/1).
+
+
+Request Body:{
+    "title": "Updated Post Title",
+    "content": "Updated Post Content"
 }
-```
 
----
 
-### ✏️ `PUT /api/posts/{id}`
+Response:
+Status Code: 200 OK
+Body:{
+    "status": "success",
+    "data": {
+        "post": {
+            "id": 1,
+            "title": "Updated Post Title",
+            "content": "Updated Post Content",
+            "created_at": "2025-07-30T16:02:00.000000Z",
+            "updated_at": "2025-07-30T16:03:00.000000Z"
+        }
+    }
+}
 
-Endpoint for updating a post — **not implemented** in the current version of the API.
 
----
+Error Response (if post not found):
+Status Code: 404 Not Found
+Body:{
+    "status": "failed",
+    "message": "post not found"
+}
 
-## ⚙️ HTTP statuses
 
-| Code | Meaning             |
-|-----|------------------------|
-| 200 | OK / Success            |
-| 201 | Created              |
-| 404 | Not found         |
-| 422 | Validation error (from `StorePostRequest`) |
 
----
 
-## 🧪 Curl examples
 
-```bash
-# Get all posts
-curl -X GET http://localhost:8000/api/posts
 
-# Create a post
-curl -X POST http://localhost:8000/api/posts \
-  -H ‘Content-Type: application/json’ \
-  -d “{‘title’:‘Test’,“content”:‘Content’}”
 
-# Get a specific post
-curl -X GET http://localhost:8000/api/posts/1
+5. Delete a Post
 
-# Delete a post
-curl -X DELETE http://localhost:8000/api/posts/1
-```
+Method: DELETE
+Endpoint: /api/posts/{post}
+Controller: PostController@destroy
+Description: Deletes a specific blog post by its ID.
+Parameters:
+post: The ID of the post (e.g., /api/posts/1).
 
----
 
-## 📁 Source files
+Response:
+Status Code: 200 OK
+Body:{
+    "status": "success",
+    "message": "post deleted succesfuly"
+}
 
-- Controller: `app/Http/Controllers/PostController.php`
-- Validation: `app/Http/Requests/StorePostRequest.php`
-- Model: `app/Models/Post.php`
 
----
+Error Response (if post not found):
+Status Code: 404 Not Found
+Body:{
+    "status": "failed",
+    "message": "post not found"
+}
 
-## 📌 Requirements
 
-- Laravel 10+
-- PHP 8.1+
-- SQLite / MySQL / other supported database
 
----
 
-## 🔧 Running the project
 
-```bash
-git clone <repo-url>
+
+
+Setup Instructions
+
+Clone the Repository:
+git clone <repository-url>
 cd blog-api
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate
-php artisan serve
-```
 
----
+
+Install Dependencies:
+composer install
+
+
+Set Up Environment:
+
+Copy the .env.example file to .env:cp .env.example .env
+
+
+Update the .env file with your database credentials and other configurations.
+
+
+Generate Application Key:
+php artisan key:generate
+
+
+Run Migrations:
+php artisan migrate
+
+
+Start the Development Server:
+php artisan serve
+
+
+Test the API:
+
+Use tools like Postman or cURL to test the API endpoints.
+Ensure the Accept header is set to application/json for all requests.
+
+
+
+Validation
+The StorePostRequest class handles validation for the store and update methods. Ensure the request body includes:
+
+title: Required, string.
+content: Required, string.
+
+Example validation rules (assumed in StorePostRequest):
+public function rules()
+{
+    return [
+        'title' => 'required|string',
+        'content' => 'required|string',
+    ];
+}
+
+Notes
+
+The API assumes a Post model with id, title, content, created_at, and updated_at fields.
+Ensure your database is properly configured to avoid connection errors.
+The API returns JSON responses with a consistent structure: { "status": "success|failed", "data": {...} } or { "status": "failed", "message": "error message" }.
