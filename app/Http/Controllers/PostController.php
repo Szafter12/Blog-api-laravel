@@ -66,9 +66,29 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StorePostRequest $request, string $id)
     {
-        //
+        $validated = $request->validated();
+
+        $post = Post::find($id);
+
+        if (!$post) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'post not found'
+            ]);
+        }
+
+        $post->title = $validated['title'];
+        $post->content = $validated['content'];
+        $post->save();
+
+        return response()->json([
+            'status' => "success",
+            'data' => [
+                "post" => $post
+            ]
+        ]);
     }
 
     /**
